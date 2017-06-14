@@ -1,0 +1,44 @@
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+	background-color: #f1f1f1;
+}
+
+img {
+	vertical-align: bottom;
+}
+
+.board {
+	width: 510px;
+	height: 510px;
+	margin: 20px auto 0;
+	position: relative;
+	border: 1px solid #999999;
+	background-color: #dddddd;
+	overflow: hidden;
+}
+
+.board .piece {
+	width: 25%;
+	float: left;
+	border: 1px solid #999999;
+}
+
+.cte {
+	cursor: pointer;
+}
+
+.done {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 40px;
+	text-transform: uppercase;
+	text-align: center;
+	color: #333333;
+	margin: 20px 0;
+}

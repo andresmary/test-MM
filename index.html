@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="Sliding puzzle game.">
+    <meta name="keywords" content="Andrés Mary, sliding puzze, MediaMonks">
+    <meta name="author" content="Andres Mary">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0" name="viewport">
+    
+    <title>Sliding puzzle - MediaMonks</title>
+    <link rel="stylesheet" type="text/css" href="css/media-monks.css">
+</head>
+
+<body>
+
+	<div class="board">
+    	<div id="position-01" class="piece"><img class="position-01" src="img/position-01.jpg" alt=""></div>
+        <div id="position-02" class="piece"><img class="position-02" src="img/position-02.jpg" alt=""></div>
+        <div id="position-03" class="piece"><img class="position-03" src="img/position-03.jpg" alt=""></div>
+        <div id="position-04" class="piece"><img class="position-04" src="img/position-04.jpg" alt=""></div>
+        <div id="position-05" class="piece"><img class="position-05" src="img/position-05.jpg" alt=""></div>
+        <div id="position-06" class="piece"><img class="position-06" src="img/position-06.jpg" alt=""></div>
+        <div id="position-07" class="piece"><img class="position-07" src="img/position-07.jpg" alt=""></div>
+        <div id="position-08" class="piece"><img class="position-08" src="img/position-08.jpg" alt=""></div>
+        <div id="position-09" class="piece"><img class="position-09" src="img/position-09.jpg" alt=""></div>
+        <div id="position-10" class="piece"><img class="position-10" src="img/position-10.jpg" alt=""></div>
+        <div id="position-11" class="piece"><img class="position-11" src="img/position-11.jpg" alt=""></div>
+        <div id="position-12" class="piece"><img class="position-12" src="img/position-12.jpg" alt=""></div>
+        <div id="position-13" class="piece"><img class="position-13" src="img/position-13.jpg" alt=""></div>
+        <div id="position-14" class="piece"><img class="position-14" src="img/position-14.jpg" alt=""></div>
+        <div id="position-15" class="piece"><img class="position-15" src="img/position-15.jpg" alt=""></div>
+        <div id="position-16" class="piece"><img class="position-16" src="img/position-16.jpg" alt=""></div>
+    </div>
+    
+    <div class="done" style="display:none">Game over</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		$('.board').each(function(){
+			var pImages = $('.piece').children('img');
+			var bDiv = $('.board').children('div');
+	
+			pImages.sort(function() {
+				return 0.5 - Math.random();
+			});
+		  
+			$.map(bDiv, function (bDiv, pos) {
+				bDiv.append(pImages[pos]);
+			});
+			
+			$(this).find('.piece').each(function(){
+				if ( $(this).children('img').hasClass('position-16') ) {
+					$(this).addClass('empty');
+				}
+				$(this).css('top', $(this).position().top);
+				$(this).css('left', $(this).position().left);
+			});
+			
+		});
+		
+		function checkOrder() {
+			$('.board').each(function(){
+				$(this).find('.piece').each(function(){
+					if ( $(this).attr('id') == $(this).children('img').attr('class') ){
+						$(this).addClass('ok');
+					} else {
+						$(this).removeClass('ok');
+					}
+				});
+			});
+			if (!$('.piece').not('.ok').length) {
+				$('.done').show();
+				$('.piece').removeClass('cte');
+			}
+		}
+		
+		function closeToEmpty() {
+			$('.board').each(function(){
+				$(this).find('.piece').each(function(){
+					if (  ($(this).position().left) == ($('.empty').position().left-127) && ($(this).position().top) == ($('.empty').position().top) || ($(this).position().left) == ($('.empty').position().left) && ($(this).position().top) == ($('.empty').position().top-127) || ($(this).position().left) == ($('.empty').position().left+127) && ($(this).position().top) == ($('.empty').position().top) || ($(this).position().left) == ($('.empty').position().left) && ($(this).position().top) == ($('.empty').position().top+127) ) {
+						$(this).addClass('cte');
+					} else {
+						$(this).removeClass('cte');
+					}
+				});
+			});
+		}
+		closeToEmpty();
+
+		$('.piece').click(function(){
+			if ( $(this).hasClass('cte') ) {
+				
+				var toImg = $('.empty').html();
+				var fromImg = $(this).html();
+				
+				$('.empty').empty().append(fromImg).removeClass('empty');
+				$(this).empty().append(toImg).addClass('empty');
+				
+				closeToEmpty();
+				checkOrder();
+			}
+		});
+		
+	});
+</script>
+</body>
+</html>
